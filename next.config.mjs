@@ -7,7 +7,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
     reactStrictMode: true,
     eslint: {
-        dirs: ['app', 'components', 'styles'],
+        dirs: ['app', 'components', 'styles', 'utils', 'core', 'modules', 'prisma', 'lib', 'services'],
     },
 };
 

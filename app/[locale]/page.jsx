@@ -19,14 +19,15 @@ import {
 } from "@/components/ui/select"
 
 import {useTranslations} from 'next-intl';
-import { getServerSession } from "next-auth"
 import {LoginButton} from "@/components/auth/LoginButton";
-import {authOptions} from "@/lib/auth";
 
-// eslint-disable-next-line @next/next/no-async-client-component
+export const metadata = {
+  title: "Storefront",
+  description: "Storefront for BoboNext",
+};
+
 export default async function Home() {
-  const t = await useTranslations('Index');
-    const session = getServerSession(authOptions)
+  // const t = useTranslations('Index');
   return (
       <main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
         <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -54,8 +55,8 @@ export default async function Home() {
             </a>
           </div>
         </div>
-        <h1>{t('title')}</h1>
-        <p>{session}</p>
+        {/*<h1>{t('title')}</h1>*/}
+        {/*<p>{session}</p>*/}
         <Card className="w-[350px]">
           <CardHeader>
             <CardTitle>Login</CardTitle>

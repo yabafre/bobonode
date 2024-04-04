@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
-import {withAuth} from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
+import { locales, localePrefix} from "@/navigation";
 
-const locales = ['en', 'fr', 'pl'];
 const intlMiddleware = createMiddleware({
     locales,
+    localePrefix,
     defaultLocale: 'fr',
-    localePrefix: 'always',
     translationsDirectory: 'lang',
 });
 function getLocale(request) {
@@ -14,41 +13,41 @@ function getLocale(request) {
     return locales.includes(locale) ? locale : 'fr'
 }
 
-const authMiddleware = withAuth({});
+export function middleware(request) {
+    const { pathname } = request.nextUrl;
+    // Check si le pathname contient un locale
+    const pathnameHasLocale = locales.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`);
 
-// if route (/:path*) set prefix locale to always, and if route (/admin_5dhb8A1a/:path*) or (/api/:path*) don't set prefix locale
-export function middleware(req, res, next) {
-    const { pathname } = req.nextUrl;
-    const locale = getLocale(req);
-    //if route (/admin_5dhb8A1a/:path*) or (/api/:path*) don't set prefix locale
-    if (pathname.startsWith('/admin_5dhb8A1a/') || pathname.startsWith('/api')) {
-        console.log('admin or api route')
-        return next;
-    }
-    req.locale = locale;
-    req.cookies.locale = locale;
-    req.nextUrl.pathname = `/${locale}${pathname}`;
+    request.locale =  getLocale(request);
+    request.cookies.locale = request.locale;
 
-    return next;
-}
-
-export function notFoundHandler(req, res, next) {
-    const { pathname } = req.nextUrl;
-
-    // Si aucune route n'a été trouvée pour cette requête, renvoyer une réponse "Not Found"
-    if (!pathname.startsWith('/admin_5dhb8A1a/') && !pathname.startsWith('/api') && !new RegExp(`^/(${locales.join('|')})`).test(pathname)) {
-        return new NextResponse().status(404).text('Not Found');
+    //Ignoré les paths spéciaux
+    if (pathname.startsWith('/admin_5dhb8A1a') || pathname.startsWith('/api')) {
+        console.log('special case', pathname)
+        return NextResponse.next();
     }
 
-    return next;
+    // Si le pathname ne contient pas de locale, on redirige vers le bon path
+    if (!pathnameHasLocale) {
+        const locale = getLocale(request);
+        const url = `/${locale}${pathname === '/' ? '' : pathname}`;
+        console.log('redirecting to', url)
+        request.nextUrl.pathname = url;
+    }
+
+    console.log('normal case', pathname)
+
+    return intlMiddleware(request);
 }
 
 export const config = {
     matcher: [
         '/',
-        '/admin_5dhb8A1a/:path*', // Admin avec dynamique sous-routes
-        '/:locale([a-z]{2})', // Locales
-        '/:locale([a-z]{2})/:path*', // Chemins sous locales
-        '/api/:path*', // API routes
+        '/((?!api|_next/static|_next/image|.*\\.png$).*)',
+        "/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)",
+        '/admin_5dhb8A1a/:path*',
+        '/:locale([a-z]{2})',
+        '/:locale([a-z]{2})/:path*',
+        '/api/:path*',
     ],
-};
+}
