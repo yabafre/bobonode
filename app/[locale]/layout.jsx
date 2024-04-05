@@ -10,11 +10,11 @@ export function generateStaticParams() {
 export default function LocaleLayout({children, params: {locale}}) {
   return (
       <html lang={locale}>
-      <SessionWrapper>
-            <body>
-                {children}
-            </body>
-      </SessionWrapper>
+        <SessionWrapper>
+          <body>
+              {children}
+          </body>
+        </SessionWrapper>
       </html>
   );
 }
