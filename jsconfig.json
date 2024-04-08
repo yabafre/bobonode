@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@core/*": ["./core/*"],
+      "@symfobo/client": ["./lib/config"],
+      "@modules/*": ["./modules/*"],
+      "@providers/*": ["./providers/*"],
+      "@media/*": ["./public/medias/*"]
     }
   }
 }

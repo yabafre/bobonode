@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import createMiddleware from 'next-intl/middleware';
 import { locales, localePrefix} from "@/navigation";
 
+
 const intlMiddleware = createMiddleware({
     locales,
     localePrefix,
@@ -13,8 +14,9 @@ function getLocale(request) {
     return locales.includes(locale) ? locale : 'fr'
 }
 
+
 export function middleware(request) {
-    const { pathname } = request.nextUrl;
+    let { pathname } = request.nextUrl;
     // Check si le pathname contient un locale
     const pathnameHasLocale = locales.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`);
 
@@ -28,12 +30,14 @@ export function middleware(request) {
     }
 
     // Si le pathname ne contient pas de locale, on redirige vers le bon path
-    if (!pathnameHasLocale) {
-        const locale = getLocale(request);
-        const url = `/${locale}${pathname === '/' ? '' : pathname}`;
-        console.log('redirecting to', url)
-        request.nextUrl.pathname = url;
-    }
+    // if (!pathnameHasLocale) {
+    //     const locale = getLocale(request);
+    //     const urlPrefix = `/${locale}${pathname === '/' ? '' : pathname}`;
+    //     console.log('redirecting to', urlPrefix)
+    //     request.nextUrl.pathname = urlPrefix;
+    //     return NextResponse.next()
+    // }
+    // pathname = request.nextUrl.pathname;
 
     console.log('normal case', pathname)
 
@@ -43,9 +47,10 @@ export function middleware(request) {
 export const config = {
     matcher: [
         '/',
-        '/((?!api|_next/static|_next/image|.*\\.png$).*)',
-        "/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)",
+        '/((?!api|admin_5dhb8A1a|_next/static|_next/image|.*\\.png$).*)',
+        "/((?!.+\\.[\\w]+$|_next).*)",
         '/admin_5dhb8A1a/:path*',
+        '/(fr|en|pl)/:path*', // for static pages
         '/:locale([a-z]{2})',
         '/:locale([a-z]{2})/:path*',
         '/api/:path*',

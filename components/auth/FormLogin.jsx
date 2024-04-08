@@ -28,6 +28,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { FcGoogle } from "react-icons/fc"
+import { FaGithub } from "react-icons/fa"
 
 const schemaLogin = z.object({
   email: z.string().email(),
@@ -77,6 +79,10 @@ export default function FormLogin() {
   })
   const onSubmitLogin = async (data) => {
     console.log("Login form : ", data)
+    await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+    })
   }
   const onSubmitRegister = async (data) => {
     console.log("Register form : ", data)
@@ -85,7 +91,7 @@ export default function FormLogin() {
     console.log("Providers : ", session)
   }, [session])
   return (
-    <Tabs defaultValue="account" className="w-2/4">
+    <Tabs defaultValue="login" className="w-2/4">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="login">Login</TabsTrigger>
         <TabsTrigger value="register">Register</TabsTrigger>
@@ -132,14 +138,20 @@ export default function FormLogin() {
                   }}
                 />
                 <FormItem>
-                  <Button type="submit">Login</Button>
+                  <Button variant={'outline'} type="submit">Login</Button>
                 </FormItem>
               </form>
             </Form>
           </CardContent>
-          <CardFooter>
-            <Button onClick={() => signIn("google")}>Login with Google</Button>
-            <Button onClick={() => signIn("github")}>Login with Github</Button>
+          <CardFooter className={"flex flex-row justify-center gap-4"}>
+            <Button onClick={() => signIn("google")} className="flex flex-row gap-2 items-center">
+              <FcGoogle />
+              <span>with google</span>
+            </Button>
+            <Button onClick={() => signIn("github")} className="flex flex-row gap-2 items-center">
+              <FaGithub />
+              <span>with github</span>
+            </Button>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -339,6 +351,16 @@ export default function FormLogin() {
               </form>
             </Form>
           </CardContent>
+          <CardFooter className={"flex flex-row justify-center gap-4"}>
+            <Button onClick={() => signIn("google")} className="flex flex-row gap-2 items-center">
+              <FcGoogle />
+              <span>with google</span>
+            </Button>
+            <Button onClick={() => signIn("github")} className="flex flex-row gap-2 items-center">
+              <FaGithub />
+              <span>with github</span>
+            </Button>
+          </CardFooter>
         </Card>
       </TabsContent>
     </Tabs>

@@ -1,26 +1,15 @@
-import React from "react";
-import SessionWrapper from "@/components/auth/SessionWrapper";
-import "@/styles/globals.css";
-
-const locales = ['en', 'fr', 'pl'];
-export function generateStaticParams() {
-  return locales.map((locale) => ({locale}));
-}
+// layout.jsx
+import React from "react"
 
 export const metadata = {
   title: "Authentication",
   description: "Authentication page for BoboNext",
 }
 
-export default function Login({children, params: {locale}}) {
-
+export default function LoginLayout({children}) {
   return (
-    <html lang={locale}>
-      <SessionWrapper>
-        <body>
-          {children}
-        </body>
-      </SessionWrapper>
-    </html>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {children}
+    </main>
   );
 }

@@ -9,12 +9,16 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+// export { auth } from "@/lib/auth";
+
 export const metadata = {
     title: "Dashboard's Page",
     description: "Admin panel for BoboNext",
 };
 
-export default function Page(props) {
+export default async function Page(props) {
+    // const session = await auth()
+    // console.log(session)
     return (
         <main className={"container"}>
             <Card>
@@ -27,8 +31,8 @@ export default function Page(props) {
                     </CardDescription>
                 </CardContent>
                 <CardFooter>
-                    <Link href={"/admin_5dhb8A1a"}>
-                        Go to Admin
+                    <Link href={"/admin_5dhb8A1a/dashboard/modules"}>
+                        Go to modules list
                     </Link>
                 </CardFooter>
             </Card>

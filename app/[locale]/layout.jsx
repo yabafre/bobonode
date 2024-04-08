@@ -1,20 +1,19 @@
-import React from "react";
 import SessionWrapper from "@/components/auth/SessionWrapper";
 import "@/styles/globals.css";
+import { SessionProvider } from "next-auth/react"
+import React, { Suspense } from 'react';
 
-const locales = ['en', 'fr', 'pl'];
-export function generateStaticParams() {
-    return locales.map((locale) => ({locale}));
-}
 
-export default function LocaleLayout({children, params: {locale}}) {
+export default function LocaleLayout(props) {
   return (
-      <html lang={locale}>
-        <SessionWrapper>
-          <body>
-              {children}
-          </body>
-        </SessionWrapper>
-      </html>
+    <html lang={props.params.locale}>
+        <body>
+          <SessionProvider session={props.session}>
+              <Suspense fallback="loading...">
+                {props.children}
+              </Suspense>
+          </SessionProvider>
+        </body>
+    </html>
   );
 }
