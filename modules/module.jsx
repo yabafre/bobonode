@@ -1,43 +1,46 @@
 "use client";
-// component for the core module, for set the module view
-// Path: components/core/ModuleCore/module.jsx
-
 import React, { useEffect, useState } from 'react';
 import dynamic from "next/dynamic"
 import Link from 'next/link';
-
-import { Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { Suspense } from "react";
 import { useModuleManager } from "@core/ModuleCore/ModuleManager"
-
+import { useRouter } from "next/navigation"
 
 // Fonction pour charger dynamiquement un composant de module avec next/dynamic
 const loadModuleComponent = (componentPath) => {
-  return dynamic(() => import(`/modules${componentPath}`).then((mod) => mod.default));
+  return dynamic(() => import(`/modules/${componentPath}`).then((mod) => mod.default));
 };
-
 
 export default function Module({ moduleName }) {
   const { modules } = useModuleManager();
-  const [module, setModule] = useState();
+  const [module, setModule] = useState(null); // Initialisez à null pour un test explicite
+  const router = useRouter();
 
   useEffect(() => {
-    const moduleInfo = modules.find((module) => module.name === moduleName);
-    setModule(moduleInfo);
-    console.log(moduleInfo)
-  }, [moduleName, modules]);
+    // Assurez-vous que modules est chargé et prêt pour la recherche
+    if (modules.length > 0) {
+      const moduleInfo = modules.find((mod) => mod.name === moduleName);
+      if (moduleInfo) {
+        setModule(moduleInfo);
+      } else {
+        // Si aucun module correspondant n'est trouvé, redirigez après un court délai
+        setTimeout(() => {
+          router.push('/admin_5dhb8A1a/dashboard/modules');
+        }, 200); // Ajustez le délai au besoin
+      }
+    }
+  }, [moduleName, modules, router]);
 
   if (!module) {
-    return null;
+    return <div>Loading module information...</div>;
   }
 
   const DynamicComponent = loadModuleComponent(module.componentPath);
 
   return (
     <section className={'container'}>
-      <h1>{module.name}</h1>
-      <p>{module.description}</p>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading component...</div>}>
         <DynamicComponent />
       </Suspense>
       <Link href={'/admin_5dhb8A1a/dashboard/modules'}>
@@ -45,5 +48,4 @@ export default function Module({ moduleName }) {
       </Link>
     </section>
   );
-
 }

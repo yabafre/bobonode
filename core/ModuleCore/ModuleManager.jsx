@@ -57,6 +57,7 @@ export const useModuleManager = () => {
 
   // Activer/désactiver un module et synchroniser avec l'API
   const toggleModule = async (moduleName) => {
+    console.log(moduleName)
     const moduleToUpdate = getModuleInfo(moduleName);
     if (!moduleToUpdate) return;
 

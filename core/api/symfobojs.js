@@ -35,7 +35,7 @@ class Symfobojs {
     }
   }
   get(endpoint) {
-
+    console.log('symfobojs get', endpoint)
     if (endpoint === '/api/modules') {
       return [
         // Simuler les données renvoyées par l'API
@@ -61,7 +61,7 @@ class Symfobojs {
     });
   }
   post(endpoint, data) {
-    console.log(data)
+    console.log('symfobojs post', data)
     return this.fetchWithRetry(endpoint, {
       method: 'POST',
       headers: {
@@ -71,6 +71,7 @@ class Symfobojs {
     });
   }
   put(endpoint, data) {
+    console.log('symfobojs put', data)
     return this.fetchWithRetry(endpoint, {
       method: 'PUT',
       headers: {
@@ -80,6 +81,7 @@ class Symfobojs {
     });
   }
   patch(endpoint, data) {
+    console.log('symfobojs patch', data)
     return this.fetchWithRetry(endpoint, {
       method: 'PATCH',
       headers: {
@@ -89,6 +91,7 @@ class Symfobojs {
     });
   }
   delete(endpoint) {
+    console.log('symfobojs delete', endpoint)
     return this.fetchWithRetry(endpoint, {
       method: 'DELETE',
       headers: {

@@ -14,7 +14,6 @@ export default function ModulePage({ params }){
   const moduleName = params.module;
 
 
-
   return (
     <section className={'container'}>
       <Module moduleName={moduleName} />

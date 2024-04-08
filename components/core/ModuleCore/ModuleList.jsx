@@ -1,16 +1,36 @@
 "use client"
 // ModuleList component for the core module, for set the modules list
 import React, {useEffect, useState} from 'react';
-import Link from 'next/link';
-import { useModules } from '@providers/ModuleContext';
 import { Switch } from '@/components/ui/switch';
 import { Button} from "@/components/ui/button"
+import DashboardLink from "@/components/admin/DashboardLink"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+} from "@/components/ui/form"
 import { useModuleManager } from "@core/ModuleCore/ModuleManager"
 import Image from "next/image"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
+// Define the schema for the module form
+const schema = z.object({
+  enabled: z.boolean(),
+});
 const ModuleList = () => {
-  const { modules, toggleModuleState } = useModuleManager();
+  const { modules, toggleModule } = useModuleManager();
+  const form = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  function onSubmit(data) {
+    console.log(data);
+    // toggleModule(data.name).then(r => console.log(r)).catch(e => console.error(e));
+  }
 
   useEffect(() => {
     console.log(modules)
@@ -29,11 +49,32 @@ const ModuleList = () => {
             <CardContent>
               <Image src={module.logo} width={100} height={100} alt={module.name} />
             </CardContent>
-            <CardFooter>
-              <Switch
-                checked={module.enabled}
-                onChange={() => toggleModuleState(module.name)}
-              />
+            <CardFooter className={'flex justify-between'}>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <FormField
+                    control={form.control}
+                    name={'enabled'}
+                    render={({ field }) => (
+                      <FormControl>
+                          <Switch
+                            defaultChecked={module.enabled}
+                            checked={field.value}
+                            onCheckedChange={(checked) => {
+                              form.setValue('enabled', checked);
+                              onSubmit({ name: module.name, enabled: checked });
+                            }}
+                          />
+                      </FormControl>
+                    )}
+                  />
+                </form>
+              </Form>
+              {module.enabled ? (
+                <DashboardLink href={`/modules/${module.name}`}>
+                  <Button variant={'outline'}>Config</Button>
+                </DashboardLink>
+              ) : null}
             </CardFooter>
           </Card>
         )) : <p>No modules available</p>}
