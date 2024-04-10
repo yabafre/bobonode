@@ -16,6 +16,7 @@ class Symfobojs {
 
   async fetchWithRetry(endpoint, options, retries = this.maxRetries) {
     try {
+      console.log(this.baseUrl, endpoint, options, retries)
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         ...options,
         headers: {
@@ -23,8 +24,14 @@ class Symfobojs {
           'X-Api-Key': `${this.apiKey}`,
         },
       });
-      if (!response.ok) throw new Error('Network response was not ok');
-      return response.json();
+      const data = await response.json();
+      // console.log('symfobojs fetchWithRetry', data)
+      if (!response.status === 200)
+      {
+        const errorBody = await response.text();
+        throw new Error(`Network response was not ok: ${errorBody}`);
+      }
+      return data;
     } catch (error) {
       if (retries > 0) {
         console.log(`Retrying... (${retries} attempts left)`);
@@ -34,7 +41,7 @@ class Symfobojs {
       }
     }
   }
-  get(endpoint) {
+  get(endpoint, headers = {}) {
     console.log('symfobojs get', endpoint)
     if (endpoint === '/api/modules') {
       return [
@@ -56,45 +63,49 @@ class Symfobojs {
     return this.fetchWithRetry(endpoint, {
       method: 'GET',
       headers: {
+        ...headers,
         'Content-Type': 'application/json',
       },
     });
   }
-  post(endpoint, data) {
+  post(endpoint, data, headers = {}) {
     console.log('symfobojs post', data)
     return this.fetchWithRetry(endpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        ...headers
       },
-      body: JSON.stringify(data),
+      body: data,
     });
   }
-  put(endpoint, data) {
+  put(endpoint, data, headers = {}) {
     console.log('symfobojs put', data)
     return this.fetchWithRetry(endpoint, {
       method: 'PUT',
       headers: {
+        ...headers,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: data,
     });
   }
-  patch(endpoint, data) {
+  patch(endpoint, data, headers = {}) {
     console.log('symfobojs patch', data)
     return this.fetchWithRetry(endpoint, {
       method: 'PATCH',
       headers: {
+        ...headers,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: data,
     });
   }
-  delete(endpoint) {
+  delete(endpoint, headers = {}) {
     console.log('symfobojs delete', endpoint)
     return this.fetchWithRetry(endpoint, {
       method: 'DELETE',
       headers: {
+        ...headers,
         'Content-Type': 'application/json',
       },
     });

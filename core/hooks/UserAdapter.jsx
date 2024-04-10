@@ -1,4 +1,5 @@
 import { SymfoboClient } from '@symfobo/client';
+// import { Adapter } from "@auth/ core/ adapters"
 /*
   * Description: UserAdapter est une class qui gère les utilisateurs de l'application.
 * */

@@ -12,10 +12,10 @@ import {
 
 
 
-export const Loading = ({ open}) => {
+export const Loading = ({ open }) => {
   const cancelRef = React.useRef(null);
   return (
-    <AlertDialog open={true} leastDestructiveRef={cancelRef}>
+    <AlertDialog open={open} leastDestructiveRef={cancelRef}>
       <AlertDialogContent className={"flex justify-center z-50 !bg-transparent border-0 shadow-none"}>
         <div className="loading loading02">
           <span>S</span>

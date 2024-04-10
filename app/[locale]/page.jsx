@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button"
@@ -21,14 +23,17 @@ import {
 
 import {useTranslations} from 'next-intl';
 import {LoginButton} from "@/components/auth/LoginButton";
+import { useSession } from "next-auth/react"
 
-export const metadata = {
-  title: "Storefront",
-  description: "Storefront for BoboNext",
-};
+// export const metadata = {
+//   title: "Storefront",
+//   description: "Storefront for BoboNext",
+// };
 
 export default function Home() {
-  const t = useTranslations('Index');
+  // const t = useTranslations('Index');
+  const { data: session } = useSession()
+  console.log(session);
 
   return (
       <main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
@@ -57,7 +62,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <h1>{t('title')}</h1>
+        {/*<h1>{t('title')}</h1>*/}
         <Card className="w-[350px]">
           <CardHeader>
             <CardTitle>Login</CardTitle>
