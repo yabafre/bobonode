@@ -17,7 +17,6 @@ export default function ModulePage({ params }){
   return (
     <section className={'container'}>
       <Module moduleName={moduleName} />
-      {/*<ProductView />*/}
     </section>
   )
 }

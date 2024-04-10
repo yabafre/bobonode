@@ -2,7 +2,6 @@
 // Path: app/%28admin%29/admin_5dhb8A1a/dashboard/modules/page.jsx
 
 import React from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -13,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import ModuleList from "@/components/core/ModuleCore/ModuleList"
+import DashboardLink from "@/components/admin/DashboardLink"
 
 export default function PageModule() {
   return (
@@ -26,9 +26,9 @@ export default function PageModule() {
           <ModuleList />
         </CardContent>
         <CardFooter>
-          <Link href="/dashboard">
+          <DashboardLink href="">
             <Button>Back</Button>
-          </Link>
+          </DashboardLink>
         </CardFooter>
       </Card>
     </div>

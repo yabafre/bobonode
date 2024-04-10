@@ -29,7 +29,6 @@ export const metadata = {
 
 export default function Home() {
   const t = useTranslations('Index');
-  console.log(t);
 
   return (
       <main className={`flex min-h-screen flex-col items-center justify-between p-24`}>

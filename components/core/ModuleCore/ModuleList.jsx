@@ -16,13 +16,14 @@ import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
+import {Loading} from "@/components/common/Loanding"
 // Define the schema for the module form
 const schema = z.object({
   enabled: z.boolean(),
 });
 const ModuleList = () => {
   const { modules, toggleModule } = useModuleManager();
+  const [srcLogo, setSrcLogo] = useState('');
   const form = useForm({
     resolver: zodResolver(schema),
   });
@@ -33,8 +34,8 @@ const ModuleList = () => {
   }
 
   useEffect(() => {
-    console.log(modules)
-  }, [modules])
+    console.log(srcLogo)
+  }, [modules, srcLogo])
 
   return (
     <div className="p-4">
@@ -43,11 +44,13 @@ const ModuleList = () => {
         {modules?.length > 0 ? modules.map((module) => (
           <Card key={module.name} className="py-4">
             <CardHeader>
-              <CardTitle>{module.name}</CardTitle>
+              <CardTitle className={'capitalize'}>{module.name}</CardTitle>
               <CardDescription>{module.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <Image src={module.logo} width={100} height={100} alt={module.name} />
+              {}
+              <Image src={srcLogo} onLoad={() => setSrcLogo(`/medias/modules/${module.name}/${module.logo}`)}
+                     width={100} height={100} alt={module.name} />
             </CardContent>
             <CardFooter className={'flex justify-between'}>
               <Form {...form}>

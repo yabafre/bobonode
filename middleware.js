@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import createMiddleware from 'next-intl/middleware';
 import { locales, localePrefix} from "@/navigation";
+import { auth } from "@/lib/auth";
 
 
 const intlMiddleware = createMiddleware({
@@ -23,26 +24,24 @@ export function middleware(request) {
     request.locale =  getLocale(request);
     request.cookies.locale = request.locale;
 
-    //Ignoré les paths spéciaux
-    if (pathname.startsWith('/admin_5dhb8A1a') || pathname.startsWith('/api')) {
+    // Ignore the locale prefix for the admin
+    if (pathname.startsWith('/admin_5dhb8A1a')) {
+        console.log('Admin case', pathname)
+        return auth(request);
+    }
+
+    // Ignore the locale prefix for the api
+    if (pathname.startsWith('/api')) {
         console.log('special case', pathname)
         return NextResponse.next();
     }
 
-    // Si le pathname ne contient pas de locale, on redirige vers le bon path
-    // if (!pathnameHasLocale) {
-    //     const locale = getLocale(request);
-    //     const urlPrefix = `/${locale}${pathname === '/' ? '' : pathname}`;
-    //     console.log('redirecting to', urlPrefix)
-    //     request.nextUrl.pathname = urlPrefix;
-    //     return NextResponse.next()
-    // }
-    // pathname = request.nextUrl.pathname;
 
     console.log('normal case', pathname)
 
     return intlMiddleware(request);
 }
+
 
 export const config = {
     matcher: [
@@ -54,5 +53,6 @@ export const config = {
         '/:locale([a-z]{2})',
         '/:locale([a-z]{2})/:path*',
         '/api/:path*',
+        '/auth/:path*', // for auth
     ],
 }

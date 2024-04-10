@@ -2,25 +2,25 @@
 
 export const modulesConfig = [
   {
-    name: 'Product',
+    name: 'product',
     description: 'Module for managing products',
     author: 'Developer',
     version: '1.0.0',
     available: true,
     category: 'Features',
     enabled: false, // cet état peut être initialisé à partir du backend lors du chargement de l'application
-    componentPath: 'product/templates/views/ProductView',
-    logo: '/medias/modules/product/logo.png',
+    componentPath: 'ProductView',
+    logo: 'logo.png',
   },
   {
-    name: 'Stripe',
+    name: 'stripe',
     description: 'Module for managing payments with stripe',
     author: 'Developer',
     version: '1.0.0',
     available: false,
     category: 'Features',
     enabled: true, // cet état peut être initialisé à partir du backend lors du chargement de l'application
-    componentPath: 'stripe/templates/views/StripeView',
-    logo: '/medias/modules/stripe/logo.png',
+    componentPath: 'StripeView',
+    logo: 'logo.png',
   }
 ];

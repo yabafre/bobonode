@@ -1,5 +1,5 @@
 import SessionWrapper from "@/components/auth/SessionWrapper";
-import "@/styles/globals.css";
+import "@/styles/globals.scss";
 import { SessionProvider } from "next-auth/react"
 import React, { Suspense } from 'react';
 

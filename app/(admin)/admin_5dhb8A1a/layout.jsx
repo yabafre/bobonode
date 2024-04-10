@@ -1,6 +1,7 @@
 // Code: bobonext/app/admin_5dhb8A1a/layout.jsx
 import React from "react";
-import "@/styles/globals.css";
+import "@/styles/globals.scss";
+import { SessionProvider } from "next-auth/react"
 
 export const metadata = {
   title: "Admin",
@@ -8,9 +9,14 @@ export const metadata = {
 };
 
 export default function AdminLayout({ children }) {
+
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>
+        <SessionProvider>
+          {children}
+        </SessionProvider>
+      </body>
     </html>
   );
 }

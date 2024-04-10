@@ -4,7 +4,7 @@
  * @param {Object} options
  * @param {string} options.baseUrl - The base URL of the API
  * @param {number} options.maxRetries - The maximum number of retries
- * @param {string} options.apiKey - The API key to use for authorization
+ * @param {string} options.apiKey - The API key to use for store requests
  */
 
 class Symfobojs {
@@ -20,7 +20,7 @@ class Symfobojs {
         ...options,
         headers: {
           ...options.headers,
-          'Authorization': `Bearer ${this.apiKey}`,
+          'X-Api-Key': `${this.apiKey}`,
         },
       });
       if (!response.ok) throw new Error('Network response was not ok');
@@ -40,15 +40,15 @@ class Symfobojs {
       return [
         // Simuler les données renvoyées par l'API
         {
-          name: 'Product',
+          name: 'product',
           description: 'Module for managing products',
           author: 'Developer',
           version: '1.0.0',
           available: true,
           category: 'Features',
-          enabled: false, // cet état peut être initialisé à partir du backend lors du chargement de l'application
-          componentPath: 'product/templates/views/ProductView',
-          logo: '/medias/modules/product/logo.png',
+          enabled: true, // cet état peut être initialisé à partir du backend lors du chargement de l'application
+          componentPath: 'ProductView',
+          logo: 'logo.png',
         },
       ];
     }

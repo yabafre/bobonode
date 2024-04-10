@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from 'react';
 import dynamic from "next/dynamic"
 import Link from 'next/link';
@@ -8,8 +9,9 @@ import { useModuleManager } from "@core/ModuleCore/ModuleManager"
 import { useRouter } from "next/navigation"
 
 // Fonction pour charger dynamiquement un composant de module avec next/dynamic
-const loadModuleComponent = (componentPath) => {
-  return dynamic(() => import(`/modules/${componentPath}`).then((mod) => mod.default));
+const loadModuleComponent = (module) => {
+  const modulePath = `${module.name}/templates/views/${module.componentPath}`;
+  return dynamic(() => import(`/modules/${modulePath}`).then((mod) => mod.default));
 };
 
 export default function Module({ moduleName }) {
@@ -27,7 +29,7 @@ export default function Module({ moduleName }) {
         // Si aucun module correspondant n'est trouvé, redirigez après un court délai
         setTimeout(() => {
           router.push('/admin_5dhb8A1a/dashboard/modules');
-        }, 200); // Ajustez le délai au besoin
+        }, 200);
       }
     }
   }, [moduleName, modules, router]);
@@ -36,7 +38,7 @@ export default function Module({ moduleName }) {
     return <div>Loading module information...</div>;
   }
 
-  const DynamicComponent = loadModuleComponent(module.componentPath);
+  const DynamicComponent = loadModuleComponent(module);
 
   return (
     <section className={'container'}>
