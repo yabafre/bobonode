@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function LoginLayout({children}) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="min-h-screen flex flex-col justify-center items-center p-24">
       {children}
     </main>
   );

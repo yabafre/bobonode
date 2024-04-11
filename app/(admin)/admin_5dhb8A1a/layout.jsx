@@ -2,7 +2,7 @@
 import React from "react";
 import "@/styles/globals.scss";
 import { SessionProvider } from "next-auth/react"
-
+import AuthGuard from "@/components/auth/AuthGuard"
 export const metadata = {
   title: "Admin",
   description: "Admin panel for BoboNext",
@@ -14,7 +14,9 @@ export default function AdminLayout({ children }) {
     <html lang="fr">
       <body>
         <SessionProvider>
-          {children}
+          <AuthGuard>
+            {children}
+          </AuthGuard>
         </SessionProvider>
       </body>
     </html>

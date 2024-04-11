@@ -10,6 +10,7 @@ export default function AuthGuard({children}) {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
 
+  console.log('status', status)
   const guestRoutes = useMemo(() => [
     "/auth/login",
   ], []);

@@ -16,18 +16,27 @@ function getLocale(request) {
 }
 
 
-export function middleware(request) {
+export default auth ((request) => {
     let { pathname } = request.nextUrl;
     // Check si le pathname contient un locale
     const pathnameHasLocale = locales.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`);
+    const isLoggedIn = !!request.auth;
 
     request.locale =  getLocale(request);
     request.cookies.locale = request.locale;
 
+    console.log('isLoggedIn', isLoggedIn)
+
+    // if the user is not logged in and the path is protected
+    if (!isLoggedIn && pathname.startsWith('/admin_5dhb8A1a')) {
+        request.nextUrl.pathname = `/${request.locale}/auth/login`
+        return intlMiddleware(request);
+    }
+
     // Ignore the locale prefix for the admin
     if (pathname.startsWith('/admin_5dhb8A1a')) {
         console.log('Admin case', pathname)
-        return auth(request);
+        return NextResponse.next();
     }
 
     // Ignore the locale prefix for the api
@@ -40,7 +49,7 @@ export function middleware(request) {
     console.log('normal case', pathname)
 
     return intlMiddleware(request);
-}
+})
 
 
 export const config = {
