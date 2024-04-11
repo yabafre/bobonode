@@ -30,6 +30,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
+import { useRouter } from "next/navigation"
 
 const schemaLogin = z.object({
   email: z.string().email(),
@@ -44,7 +45,11 @@ const schemaRegister = z.object({
   }),
   firstname: z.string(),
   lastname: z.string(),
-  newsletter: z.boolean(),
+  newsletter: z.boolean(
+    {
+      required_error: "You need to select a notification type.",
+    }
+  ),
   address: z.string(),
   city: z.string(),
   zip: z.string(),
@@ -54,6 +59,7 @@ const schemaRegister = z.object({
 
 export default function FormLogin() {
   const { data: session } = useSession()
+  const router = useRouter()
   const formLogin = useForm({
     resolver: zodResolver(schemaLogin),
     defaultValues: {
@@ -82,6 +88,7 @@ export default function FormLogin() {
     await signIn("credentials", {
       email: data.email,
       password: data.password,
+      callbackUrl: "/",
     })
   }
   const onSubmitRegister = async (data) => {

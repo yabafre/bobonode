@@ -15,14 +15,16 @@ class Symfobojs {
   }
 
   async fetchWithRetry(endpoint, options, retries = this.maxRetries) {
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Api-Key': this.apiKey,
+      ...options.headers,
+    };
     try {
       console.log(this.baseUrl, endpoint, options, retries)
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         ...options,
-        headers: {
-          ...options.headers,
-          'X-Api-Key': `${this.apiKey}`,
-        },
+        headers,
       });
       const data = await response.json();
       // console.log('symfobojs fetchWithRetry', data)
@@ -64,7 +66,6 @@ class Symfobojs {
       method: 'GET',
       headers: {
         ...headers,
-        'Content-Type': 'application/json',
       },
     });
   }
@@ -73,7 +74,8 @@ class Symfobojs {
     return this.fetchWithRetry(endpoint, {
       method: 'POST',
       headers: {
-        ...headers
+        ...headers,
+        'Content-Type': 'application/json',
       },
       body: data,
     });

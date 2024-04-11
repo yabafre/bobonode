@@ -2,17 +2,17 @@
 import { SymfoboClient } from "@symfobo/client";
 
 export const fetchModulesFromAPI = async () => {
-  return SymfoboClient.get('/api/modules');
+  return SymfoboClient.get('/modules');
 };
 
 export const createModuleInAPI = async (module) => {
-  return SymfoboClient.post('/api/modules/create', module);
+  return SymfoboClient.post('/modules/create', module);
 };
 
 export const deleteModuleInAPI = async (moduleName) => {
-  return SymfoboClient.delete(`/api/modules/delete/${moduleName}`);
+  return SymfoboClient.delete(`/modules/delete/${moduleName}`);
 };
 
 export const updateModuleInAPI = async (moduleName, module) => {
-  return SymfoboClient.put(`/api/modules/update/${moduleName}`, module);
+  return SymfoboClient.put(`/modules/update/${moduleName}`, module);
 };
