@@ -17,17 +17,18 @@ class Symfobojs {
   async fetchWithRetry(endpoint, options, retries = this.maxRetries) {
     const headers = {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       'X-Api-Key': this.apiKey,
       ...options.headers,
     };
     try {
-      console.log(this.baseUrl, endpoint, options, retries)
+      console.log(this.baseUrl, endpoint, options, headers, retries)
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         ...options,
         headers,
       });
       const data = await response.json();
-      // console.log('symfobojs fetchWithRetry', data)
+      console.log('symfobojs fetchWithRetry', data)
       if (!response.status === 200)
       {
         const errorBody = await response.text();
@@ -39,13 +40,13 @@ class Symfobojs {
         console.log(`Retrying... (${retries} attempts left)`);
         return this.fetchWithRetry(endpoint, options, retries - 1);
       } else {
-        throw new Error(`Max retries reached. ${error}`);
+        return Promise.reject(error);
       }
     }
   }
   get(endpoint, headers = {}) {
     console.log('symfobojs get', endpoint)
-    if (endpoint === '/api/modules') {
+    if (endpoint === '/modules') {
       return [
         // Simuler les données renvoyées par l'API
         {
@@ -75,7 +76,6 @@ class Symfobojs {
       method: 'POST',
       headers: {
         ...headers,
-        'Content-Type': 'application/json',
       },
       body: data,
     });
@@ -86,7 +86,6 @@ class Symfobojs {
       method: 'PUT',
       headers: {
         ...headers,
-        'Content-Type': 'application/json',
       },
       body: data,
     });
@@ -97,7 +96,6 @@ class Symfobojs {
       method: 'PATCH',
       headers: {
         ...headers,
-        'Content-Type': 'application/json',
       },
       body: data,
     });
@@ -108,7 +106,6 @@ class Symfobojs {
       method: 'DELETE',
       headers: {
         ...headers,
-        'Content-Type': 'application/json',
       },
     });
   }

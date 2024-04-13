@@ -14,9 +14,9 @@ export default function AdminLayout({ children }) {
     <html lang="fr">
       <body>
         <SessionProvider>
-          <AuthGuard>
+          {/*<AuthGuard>*/}
             {children}
-          </AuthGuard>
+          {/*</AuthGuard>*/}
         </SessionProvider>
       </body>
     </html>

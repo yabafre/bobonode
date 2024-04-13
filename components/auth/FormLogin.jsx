@@ -112,7 +112,7 @@ export default function FormLogin() {
             <Form {...formLogin}>
               <form
                 onSubmit={formLogin.handleSubmit(onSubmitLogin)}
-                className={"w-full flex flex-col gap-4"}
+                className={"flex w-full flex-col gap-4"}
               >
                 <FormField
                   control={formLogin.control}
@@ -151,11 +151,11 @@ export default function FormLogin() {
             </Form>
           </CardContent>
           <CardFooter className={"flex flex-row justify-center gap-4"}>
-            <Button onClick={() => signIn("google")} className="flex flex-row gap-2 items-center">
+            <Button onClick={() => signIn("google")} className="flex flex-row items-center gap-2">
               <FcGoogle />
               <span>with google</span>
             </Button>
-            <Button onClick={() => signIn("github")} className="flex flex-row gap-2 items-center">
+            <Button onClick={() => signIn("github")} className="flex flex-row items-center gap-2">
               <FaGithub />
               <span>with github</span>
             </Button>
@@ -171,7 +171,7 @@ export default function FormLogin() {
             <Form {...formRegister}>
               <form
                 onSubmit={formRegister.handleSubmit(onSubmitRegister)}
-                className={"w-full grid grid-cols-4 gap-4"}
+                className={"grid w-full grid-cols-4 gap-4"}
               >
                 <FormField
                   control={formRegister.control}
@@ -359,11 +359,11 @@ export default function FormLogin() {
             </Form>
           </CardContent>
           <CardFooter className={"flex flex-row justify-center gap-4"}>
-            <Button onClick={() => signIn("google")} className="flex flex-row gap-2 items-center">
+            <Button onClick={() => signIn("google")} className="flex flex-row items-center gap-2">
               <FcGoogle />
               <span>with google</span>
             </Button>
-            <Button onClick={() => signIn("github")} className="flex flex-row gap-2 items-center">
+            <Button onClick={() => signIn("github")} className="flex flex-row items-center gap-2">
               <FaGithub />
               <span>with github</span>
             </Button>

@@ -5,7 +5,7 @@ import {usePathname, useRouter} from "next/navigation";
 import { Loading } from "@/components/common/Loanding"
 
 export default function AuthGuard({children}) {
-  const {data: status} = useSession();
+  const {data: session, status: status} = useSession();
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ export default function AuthGuard({children}) {
 
   useEffect(() => {
     const isGuestRoute = !!guestRoutes.find(route => route === pathname);
-    setLoading(true);
+    // setLoading(true);
 
     if (status === 'loading') {
       return;
@@ -33,7 +33,7 @@ export default function AuthGuard({children}) {
   return (
     <>
       <div>
-        {loading ? <div>..loading</div> : children}
+        {loading ? <div className={'flex h-screen w-screen flex-col items-center justify-center'}>...Loading</div> : children}
       </div>
     </>
   );

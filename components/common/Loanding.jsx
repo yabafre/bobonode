@@ -12,11 +12,12 @@ import {
 
 
 
-export const Loading = ({ open }) => {
+export const Loading = () => {
   const cancelRef = React.useRef(null);
   return (
-    <AlertDialog open={open} leastDestructiveRef={cancelRef}>
-      <AlertDialogContent className={"flex justify-center z-50 !bg-transparent border-0 shadow-none"}>
+    <AlertDialog open={true} leastDestructiveRef={cancelRef}>
+      <AlertDialogContent className={"z-50 flex justify-center border-0 !bg-transparent shadow-none"}>
+        {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
         <div className="loading loading02">
           <span>S</span>
           <span>Y</span>

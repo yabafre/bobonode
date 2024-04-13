@@ -9,7 +9,7 @@ const nextConfig = withStoreConfig({
     reactStrictMode: true,
     eslint: {
         dirs: ['app', 'components', 'utils', 'core', 'modules', 'prisma', 'lib', 'services'],
-    }
+    },
 });
 
 export default withNextIntl(nextConfig);

@@ -16,7 +16,6 @@ import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import {Loading} from "@/components/common/Loanding"
 // Define the schema for the module form
 const schema = z.object({
   enabled: z.boolean(),
@@ -39,7 +38,7 @@ const ModuleList = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Available Modules</h2>
+      <h2 className="mb-4 text-xl font-bold">Available Modules</h2>
       <div className="divide-y divide-gray-200">
         {modules?.length > 0 ? modules.map((module) => (
           <Card key={module.name} className="py-4">

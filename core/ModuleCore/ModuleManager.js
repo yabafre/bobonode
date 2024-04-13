@@ -17,6 +17,8 @@ export const useModuleManager = () => {
   const synchronizeModules = async () => {
     const apiModules = await fetchModulesFromAPI();
 
+    console.log(apiModules)
+
     // Créer ou supprimer des modules dans l'API en fonction de la configuration locale
     await Promise.all(modulesConfig.map(async (localModule) => {
       const moduleExistsInAPI = apiModules.find(apiModule => apiModule.name === localModule.name);
